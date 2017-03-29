@@ -31,7 +31,7 @@ class Lidar(object):
         # print x, y, dimension, path
         x_start = location[0] * self.cell_size
         y_start = (self.grid_size[1]-1-location[1]) * self.cell_size
-        print y_start
+        print "{} {:5} {:5}  {}".format(location, x_start, y_start, filename)
         try:
             data = numpy.loadtxt(os.path.join(self.dirname, filename),
                                  skiprows=6)
@@ -62,7 +62,8 @@ class Lidar(object):
         numpy.savetxt(path, self.matrix, delimiter=",")
 
     def normalise(self):
-        self.matrix[numpy.isnan(self.matrix)] = self.matrix[numpy.isfinite(self.matrix)].min() - 1
+        minimum = self.matrix[numpy.isfinite(self.matrix)].min()
+        self.matrix[numpy.isnan(self.matrix)] = minimum - 0.1
         self.matrix -= self.matrix.min()
         self.matrix *= 255.0/self.matrix.max()
 
@@ -70,7 +71,8 @@ class Lidar(object):
         with open(path, 'wb') as pngfile:
             w = png.Writer(self.cell_size*self.grid_size[0],
                            self.cell_size*self.grid_size[1],
-                           greyscale=True)
+                           greyscale=True,
+                           transparent=0)
             w.write(pngfile, self.matrix)
 
     def summary(self):

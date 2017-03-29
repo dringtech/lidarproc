@@ -16,6 +16,6 @@ if not os.path.isdir(dirname):
 area = Lidar(model, resolution, base)
 area.load(dirname)
 
-area.write_csv('output/' + filename + '.csv')
+# area.write_csv('output/' + filename + '.csv')
 area.normalise()
 area.write_png('output/' + filename + '.png')

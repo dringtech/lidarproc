@@ -1,4 +1,4 @@
-# lidarprep
+# lidarproc
 
 Python routine to turn downloaded LIDAR data into PNG files.
 
@@ -28,7 +28,25 @@ includes man-made objects, whereas the DTM (Digital Terrain Model) does not.
 The finer the resolution (i.e. smaller the dimension), the larger the
 corresponding files.
 
-E
+The tool supports the DTM and DSM Composites. It's been tested on the 2m and 1m
+resolutions. It should work on the 50cm resolution, but tiling the entire
+dataset into a single PNG file tends to blow up memory. Some optimisation is
+required.
+
+Unzip the files into the `data` directory, and from the project directory round
+
+    ./lidarprep.py data/<dataset>
+
+You will see the individual files being read and jigsawed into a large
+matrix. There will then be a short pause while the PNG is prepared and written.
+It'll appear in the output directory.
+
+# References
+
+The data was [first released][Blog] in September 2015.
+
+
+[Blog]: https://environmentagency.blog.gov.uk/2015/09/18/laser-surveys-light-up-open-data/
 
 [VE]: https://virtualenv.pypa.io/en/stable/ 'Link to VirtualEnv homepage'
 [EA]: http://environment.data.gov.uk/ds/survey/ 'Link to Survey Data provided by the Environment Agency'

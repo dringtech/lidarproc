@@ -40,6 +40,9 @@ class Lidar(object):
                         x_start:x_start+self.cell_size] = data
         except IOError:
             pass
+        except ValueError:
+            print "Something wrong with {}".format(filename)
+
 
     def load(self, dirname):
         if not os.path.isdir(dirname):
@@ -52,7 +55,7 @@ class Lidar(object):
         grid = map(set, zip(*[coords(f) for f in files]))
         self.start_cell = list(map(min, grid))
         self.grid_size = list(map(len, grid))
-        self.matrix = numpy.empty([x * self.cell_size for x in self.grid_size])
+        self.matrix = numpy.empty([x * self.cell_size for x in self.grid_size][::-1])
         self.matrix.fill(numpy.nan)
 
         map(self._process_cell, files)
